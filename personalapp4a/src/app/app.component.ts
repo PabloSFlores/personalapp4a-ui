@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'personalapp4a';
+  counter: number = 0;
+
+  adding(){
+    this.counter++;
+  }
+
+  minus(){
+    this.counter--;
+  }
 }
