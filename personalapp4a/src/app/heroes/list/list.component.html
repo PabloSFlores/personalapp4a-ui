@@ -1,1 +1,21 @@
-<p>list works!</p>
+<div class="row">
+    <div *ngFor="let heroe of heroes" class="col-4 col-md-4 col-sm-6 col-xs-4">
+        <div class="card">
+            <div class="car-header">
+                {{heroe.name}}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        {{heroe.abilities}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end text-light">
+                        <small>{{heroe.power}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
