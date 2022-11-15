@@ -15,7 +15,12 @@ export class AddComponent {
   }
   constructor(private readonly heroesService: HeroesService) { }
 
-  saveHeroe(){
-    this.heroesService.saveHeroe(this.heroe);
+  saveHeroe() {
+    this.heroesService.saveHeroe({ ...this.heroe });
+    this.heroe = {
+      name: '',
+      power: 0,
+      abilities: [],
+    }
   }
 }
