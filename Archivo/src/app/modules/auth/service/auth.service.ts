@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { UserLogin } from '../types/user';
-import { APP_URL } from './base-urls';
+import { APP_URL } from '../../../services/base-urls';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
     this.isLoading = value;
   }
 
-  constructor(private readonly http: HttpClient, private router: Router) { }
+  constructor(private readonly http: HttpClient, private router: Router,
+    private loginState: GeneralService) { }
 
   signin(user: UserLogin){
     this.setLoading = true;
@@ -29,13 +31,13 @@ export class AuthService {
     .pipe(
       catchError((error) => {
         this.setLoading = false;
-        alert("No le sabes")
         return error;
       })
     )
     .subscribe((response) => {
       localStorage.setItem("token", response.token);
       this.router.navigateByUrl('/');
+      this.loginState.setIsLogged = true;
       this.setLoading = false;
     })
   }

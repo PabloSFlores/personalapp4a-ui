@@ -9,7 +9,9 @@ import { materialModules } from './types/material-modules';
 import { AppRouterModule } from './shared/routers/app-router.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { PersonalModule } from './modules/personal/personal.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CustomHttInterceptorService } from './services/http-interceptor.service';
+import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent],
@@ -24,7 +26,13 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   exports: [AppComponent, NavigationComponent],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttInterceptorService,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
