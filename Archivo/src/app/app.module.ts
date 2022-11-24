@@ -11,7 +11,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PersonalModule } from './modules/personal/personal.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomHttInterceptorService } from './services/http-interceptor.service';
-import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent],

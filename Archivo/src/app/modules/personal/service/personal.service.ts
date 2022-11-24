@@ -8,34 +8,18 @@ import { Personal } from '../types/personla';
   providedIn: 'root'
 })
 export class PersonalService {
-  private loading: boolean = false;
-  private personal: Personal[] = [];
+  public loading: boolean = false;
+  private people: Personal[] = [];
 
-  get getPersonal() {
-    return [...this.personal];
-  }
-
-  set addPersonal(person: Personal) {
-    this.personal.push(person)
+  get personal(){
+    return [...this.people];
   }
 
   constructor(private http: HttpClient) { }
 
-  get isLoading() {
-    return this.loading;
-  }
-
-  getAllPersonal() {
+  findAll(){
     this.loading = true;
-    this.http.
-      get<any>(`${APP_URL}api/personal/`)
-      .pipe(catchError((error) => {
-        this.loading = false;
-        return error;
-      }))
-      .subscribe((response: Personal[]) => {
-        this.loading = false;
-        this.personal = response;
-      })
+    return this.http
+    .get<Personal[]>(`${APP_URL}api/personal/`)
   }
 }
