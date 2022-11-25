@@ -6,6 +6,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PersonalService } from '../../service/personal.service';
 import { Personal } from '../../types/personla';
+import { AddPersonalComponent } from '../add-personal/add-personal.component';
 
 @Component({
   selector: 'app-main-personal',
@@ -14,7 +15,7 @@ import { Personal } from '../../types/personla';
 
 export class MainPersonalComponent implements OnInit {
 
-  dispalyedColumns: string[] = [
+  displayedColumns: string[] = [
     '#',
     'name',
     'surname',
@@ -23,8 +24,8 @@ export class MainPersonalComponent implements OnInit {
     'salary',
     'actions'
   ];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   personal!: MatTableDataSource<Personal>;
   constructor(private personalService: PersonalService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -39,7 +40,7 @@ export class MainPersonalComponent implements OnInit {
       this.personal.sort = this.sort;
     })
   }
-  announcedSortChange(sort: Sort){
+  announceSortChange(sort: Sort){
     if(sort.direction){
       this._liveAnnouncer.announce(`Sorted ${sort.direction} ending`);
     } else{
@@ -47,4 +48,16 @@ export class MainPersonalComponent implements OnInit {
     }
   }
   //Modal
+  openDialog(enterAnimation: string,
+    exitAnimation: string){
+      const modalRef = this.dialog.open(AddPersonalComponent,{//ng g c modules/personal/pages/addPersonal
+        width:"60%",
+        enterAnimationDuration:enterAnimation,
+        exitAnimationDuration:exitAnimation,
+        disableClose:true
+      });
+      modalRef.afterClosed().subscribe((result: any)=>{
+        console.log("Modal closed");        
+      })
+  }
 }

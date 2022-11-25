@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
 import { APP_URL } from 'src/app/services/base-urls';
 import { Personal } from '../types/personla';
 
@@ -21,5 +20,11 @@ export class PersonalService {
     this.loading = true;
     return this.http
     .get<Personal[]>(`${APP_URL}api/personal/`)
+  }
+
+  save(personal: Personal){
+    this.loading = true;
+    return this.http
+    .post<Personal>(`${APP_URL}api/personal/`,personal)
   }
 }
