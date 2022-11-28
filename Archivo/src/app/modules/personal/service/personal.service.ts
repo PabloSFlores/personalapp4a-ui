@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APP_URL } from 'src/app/services/base-urls';
-import { Personal } from '../types/personla';
+import { Personal } from '../types/personal';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
 import { PersonalService } from '../../service/personal.service';
-import { Personal } from '../../types/personla';
+import { Personal } from '../../types/personal';
 
 @Component({
   selector: 'app-add-personal',

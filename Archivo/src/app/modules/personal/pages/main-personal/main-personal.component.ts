@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PersonalService } from '../../service/personal.service';
-import { Personal } from '../../types/personla';
+import { Personal } from '../../types/personal';
 import { AddPersonalComponent } from '../add-personal/add-personal.component';
 
 @Component({
