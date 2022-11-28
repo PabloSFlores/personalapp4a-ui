@@ -104,8 +104,7 @@
           >
             <mat-option [value]="">Seleccionar posicion</mat-option>
             <mat-option *ngFor="let position of positions"
-              >{{ position.position }}-{{ position.description }}</mat-option
-            >
+              >{{ position.position }}-{{ position.description }}</mat-option>
           </mat-select>
           <mat-error *ngIf="position.invalid">
             <span *ngIf="position.errors?.['required']">Campo obligatorio</span>
@@ -125,7 +124,7 @@
       mat-button
       cdkFocusInitial
       [disabled]="personalForm.invalid">
-      <mat-icon>save</mat-icon>
+      <mat-icon>safe</mat-icon>
       Save
     </button>
   </mat-dialog-actions>

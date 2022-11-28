@@ -16,13 +16,13 @@ import { AddPersonalComponent } from '../add-personal/add-personal.component';
 export class MainPersonalComponent implements OnInit {
 
   displayedColumns: string[] = [
-    '#',
-    'name',
-    'surname',
-    'lastname',
-    'birthday',
-    'salary',
-    'actions'
+    "#",
+    "name",
+    "surname",
+    "lastname",
+    "birthday",
+    "salary",
+    "actions",
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,6 +40,7 @@ export class MainPersonalComponent implements OnInit {
       this.personal.sort = this.sort;
     })
   }
+
   announceSortChange(sort: Sort){
     if(sort.direction){
       this._liveAnnouncer.announce(`Sorted ${sort.direction} ending`);
@@ -54,7 +55,7 @@ export class MainPersonalComponent implements OnInit {
         width:"60%",
         enterAnimationDuration:enterAnimation,
         exitAnimationDuration:exitAnimation,
-        disableClose:true
+        disableClose:false //cambiar a true
       });
       modalRef.afterClosed().subscribe((result: any)=>{
         console.log("Modal closed");        
