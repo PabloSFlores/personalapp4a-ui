@@ -14,51 +14,44 @@ import { AddPersonalComponent } from '../add-personal/add-personal.component';
 })
 
 export class MainPersonalComponent implements OnInit {
-
-  displayedColumns: string[] = [
-    "#",
-    "name",
-    "surname",
-    "lastname",
-    "birthday",
-    "salary",
-    "actions",
-  ];
+  displayedColumns: string[] = ['#', 'name', 'surname', 'lastname', 'birthday', 'salary', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   personal!: MatTableDataSource<Personal>;
-  constructor(private personalService: PersonalService,
-    private _liveAnnouncer: LiveAnnouncer,
-    public dialog: MatDialog) { }
+  // dataSource = ELEMENT_DATA;
+  constructor(private personalService: PersonalService, private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.personalService.findAll()
-    .subscribe((response: Personal[])=>{
+  ngOnInit() {
+    this.getAllPersonal();
+  }
+
+  getAllPersonal() {
+    this.personalService.findAll().subscribe((response: Personal[]) => {
       this.personal = new MatTableDataSource<Personal>(response);
       this.personalService.loading = false;
       this.personal.paginator = this.paginator;
       this.personal.sort = this.sort;
-    })
+    });
   }
 
-  announceSortChange(sort: Sort){
-    if(sort.direction){
+  announceSortChange(sort: Sort) {
+    if (sort.direction) {
       this._liveAnnouncer.announce(`Sorted ${sort.direction} ending`);
-    } else{
+    } else {
       this._liveAnnouncer.announce(`Sort cleared`)
     }
   }
   //Modal
-  openDialog(enterAnimation: string,
-    exitAnimation: string){
-      const modalRef = this.dialog.open(AddPersonalComponent,{//ng g c modules/personal/pages/addPersonal
-        width:"60%",
-        enterAnimationDuration:enterAnimation,
-        exitAnimationDuration:exitAnimation,
-        disableClose:false //cambiar a true
-      });
-      modalRef.afterClosed().subscribe((result: any)=>{
-        console.log("Modal closed");        
-      })
+
+  openDialog(enterAnimation: string, exitAnimation: string) {
+    const modalRef = this.dialog.open(AddPersonalComponent, {
+      width: '60%',
+      enterAnimationDuration: enterAnimation,
+      exitAnimationDuration: exitAnimation,
+      disableClose: true
+    });
+    modalRef.afterClosed().subscribe((result: any) => {
+      this.getAllPersonal();
+    })
   }
 }

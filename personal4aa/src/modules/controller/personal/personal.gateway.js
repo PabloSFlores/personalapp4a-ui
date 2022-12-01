@@ -2,7 +2,7 @@ const { query } = require('../../../utils/mysql');
 
 const findAll = async () => {
   const sql = `SELECT pe.*, po.description FROM personal pe JOIN positions po
-        ON po.id = pe.position_id`;
+        ON po.id = pe.position_id ORDER BY id DESC`;
   return await query(sql, []);
 };
 
@@ -15,6 +15,7 @@ const findById = async (id) => {
 };
 
 const save = async (person) => {
+  console.log(person);
   if (
     !person.name ||
     !person.surname ||

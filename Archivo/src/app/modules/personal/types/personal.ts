@@ -1,4 +1,5 @@
 import { Entity } from "src/app/types/entity";
+import { Position } from "./position";
 
 export type Personal = Entity<number> & {
     name: String;
@@ -6,6 +7,6 @@ export type Personal = Entity<number> & {
     lastname: String;
     birthday: String;
     salary: number;
-    position: any;
+    position?: Position;
     user: any;
 }

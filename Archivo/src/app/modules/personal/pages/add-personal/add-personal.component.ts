@@ -18,15 +18,12 @@ export class AddPersonalComponent implements OnInit {
     lastname: "",
     birthday: "",
     salary: 0.0,
-    position: {
-      id: 0,
-      position: "",
-      description: ""
-    },
+    position: {},
     user: undefined
   }
 
   positions: Position[] = [];
+  loadedFile = "";
 
   constructor(private positionsService: PositionsService,
     private personalService: PersonalService,
@@ -37,10 +34,9 @@ export class AddPersonalComponent implements OnInit {
     //Realizar la petición hacia su servicio de positions
     //Asignar las positions a nuestra variable this.positions
     this.positionsService.findAll()
-      .subscribe((response: Position[]) => {
+      .subscribe((response) => {
         console.log(response);
         this.positions = response;
-        this.positionsService.loading = false;
       })
   }
 
@@ -49,22 +45,28 @@ export class AddPersonalComponent implements OnInit {
       subscribe((response: Personal) => {
         //validar si la persona fue registrada correctamente
         //SI -> Cerrar Modal, limpiar el form y actualizar la consulta general del personal
-        if (response != null)
-          this.personal = {
-            id: 0,
-            name: "",
-            surname: "",
-            lastname: "",
-            birthday: "",
-            salary: 0.0,
-            position: {
-              id: 0,
-              position: "",
-              description: ""
-            },
-            user: undefined
-          }
+        this.personal = {
+          id: 0,
+          name: "",
+          surname: "",
+          lastname: "",
+          birthday: "",
+          salary: 0.0,
+          position: {},
+          user: undefined
+        };
+        this.modalRef.close();
       })
   }
 
+  previewFile(event: any){
+    const {target} = event;
+    console.log(target.value);    
+    const reader = new FileReader();
+    reader.readAsDataURL(target.files[0]);
+    reader.onloadend = (resolve) =>{
+      console.log(resolve.target!.result);
+      this.loadedFile = resolve.target!.result + "";
+    }
+  }
 }
