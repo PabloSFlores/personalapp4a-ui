@@ -7,45 +7,45 @@ import { Personal } from '../types/personal';
   providedIn: 'root'
 })
 export class PersonalService {
-  public loading: boolean = false;
+  loading: boolean = false;
   private people: Personal[] = [];
   edit: boolean = false;
   person: Personal = {
     id: 0,
-    name: "",
-    surname: "",
-    lastname: "",
-    birthday: "",
+    name: '',
+    surname: '',
+    lastname: '',
+    birthday: '',
     salary: 0.0,
     position: {},
     user: undefined
   };
 
-  get personal(){
-    return [...this.people];
+  get personal() {
+    return [ ...this.people ];
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  findAll(){
+  findAll() {
     this.loading = true;
-    return this.http
-    .get<Personal[]>(`${APP_URL}api/personal/`)
+    return this.http.get<Personal[]>(`${ APP_URL }api/personal/`);
   }
 
-  save(personal: Personal){
+  save(personal: Personal) {
     this.loading = true;
-    return this.http
-    .post<Personal>(`${APP_URL}api/personal/`,personal)
+    return this.http.post<Personal>(`${ APP_URL }api/personal/`, personal);
   }
 
-  update(personal: Personal){
+  update(personal: Personal) {
     this.loading = true;
-    return this.http
-    .put<Personal>(`${APP_URL}api/personal/`,personal)
+    return this.http.put<Personal>(`${ APP_URL }api/personal/`, personal);
   }
 
-  changeStatus(person: Personal){
-    
+  changeStatus(person: Personal) {
+    this.loading = true;
+    return this.http.delete<Personal>(`${ APP_URL }api/personal/`,
+      { body: person });
   }
 }

@@ -20,18 +20,21 @@ export class MainPersonalComponent implements OnInit {
   personal!: MatTableDataSource<Personal>;
 
   // dataSource = ELEMENT_DATA;
-  constructor(private personalService: PersonalService, private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) { }
+  get isLoading() {
+    return this.personalService.loading;
+  }
+
+  constructor(private personalService: PersonalService,
+              private _liveAnnouncer: LiveAnnouncer,
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.getAllPersonal();
   }
 
-  get isLoading() {
-    return this.personalService.loading;
-  }
-
   getAllPersonal() {
-    this.personalService.findAll().subscribe((response: Personal[]) => {
+    this.personalService.findAll().subscribe((response) => {
       this.personal = new MatTableDataSource<Personal>(response);
       this.personalService.loading = false;
       this.personal.paginator = this.paginator;
@@ -41,14 +44,16 @@ export class MainPersonalComponent implements OnInit {
 
   announceSortChange(sort: Sort) {
     if (sort.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sort.direction} ending`);
+      this._liveAnnouncer.announce(`Sorted ${ sort.direction } ending`);
     } else {
-      this._liveAnnouncer.announce(`Sort cleared`)
+      this._liveAnnouncer.announce(`Sort cleared`);
     }
   }
-  //Modal
 
-  openDialog(enterAnimation: string, exitAnimation: string) {
+  openDialog(
+    enterAnimation: string,
+    exitAnimation: string
+  ) {// ng g c modules/personal/pages/addPersonal
     const modalRef = this.dialog.open(AddPersonalComponent, {
       width: '60%',
       enterAnimationDuration: enterAnimation,
@@ -59,29 +64,38 @@ export class MainPersonalComponent implements OnInit {
       this.getAllPersonal();
       this.personalService.person = {
         id: 0,
-        name: "",
-        surname: "",
-        lastname: "",
-        birthday: "",
+        name: '',
+        surname: '',
+        lastname: '',
+        birthday: '',
         salary: 0.0,
         position: {},
         user: undefined
       };
-    })
+    });
   }
 
   editPerson(person: any) {
-    console.log(person);
-    this.personalService.person = { 
-      ...person, 
-      birthday: person.birthday.split('T')[0], 
-      position: { id: person.position_id } 
+    this.personalService.person = {
+      ...person,
+      birthday: person.birthday.split('T')[0],
+      position: { id: person.position_id }
     };
     this.personalService.edit = true;
-    this.openDialog('2m', '2ms');
+    this.openDialog('2ms', '2ms');
   }
 
-  removePerson(){
-    
+  changeStatus(person: Personal) {
+    this.personalService.changeStatus(person)
+      .subscribe((response) => {
+        console.log(response);
+        this.personalService.loading = false;
+        this.getAllPersonal();
+      });
   }
 }
+
+
+
+
+

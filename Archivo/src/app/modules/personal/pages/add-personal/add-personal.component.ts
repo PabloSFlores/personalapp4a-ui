@@ -12,9 +12,8 @@ import { Position } from '../../types/position';
 })
 export class AddPersonalComponent implements OnInit {
   personal: Personal;
-
   positions: Position[] = [];
-  loadedFile = "";
+  loadedFile: string = '';
 
   constructor(private positionsService: PositionsService,
     private personalService: PersonalService,
@@ -39,32 +38,28 @@ export class AddPersonalComponent implements OnInit {
     return this.personalService.edit;
   }
 
-  savePerson() {
-    if(this.edit){
-      //PUT
+  savePersonal() {
+    console.log(this.personal);
+    if (this.personalService.edit) {
       this.personalService.update(this.personal)
-      .subscribe((response)=>{
-        this.modalRef.close();
-      })
-    }else{
-      //validar si la persona fue registrada correctamente
-      //SI -> Cerrar Modal, limpiar el form y actualizar la consulta general del personal
-      //POST      
-      this.personalService.save(this.personal).
-      subscribe((response: Personal) => {
-        this.modalRef.close();
-      })
+        .subscribe((response) => {
+          this.modalRef.close();
+        });
+    } else {
+      this.personalService.save(this.personal)
+        .subscribe((response) => {
+          this.modalRef.close();
+        });
     }
   }
 
-  previewFile(event: any){
-    const {target} = event;
-    console.log(target.value);    
+  previewFile(event: any) {
+    const { target } = event;
+    console.log(target.value);
     const reader = new FileReader();
     reader.readAsDataURL(target.files[0]);
-    reader.onloadend = (resolve) =>{
-      console.log(resolve.target!.result);
-      this.loadedFile = resolve.target!.result + "";
-    }
+    reader.onloadend = (result) => {
+      this.loadedFile = result.target!.result + '';
+    };
   }
 }
