@@ -1,6 +1,6 @@
 const { Response, Router } = require('express');
 const validateError = require('../../../utils/functions');
-const { findAll, findById, save } = require('./personal.gateway');
+const { findAll, findById, save, modify } = require('./personal.gateway');
 
 const getAll = async (req, res = Response) => {
   try {
@@ -44,11 +44,33 @@ const insert = async (req, res = Response) => {
   }
 };
 
+const update = async (req, res = Response) => {
+  try {
+    const { name, surname, lastname, birthday, salary, position, id } = req.body;
+    const person = await modify({
+      name,
+      surname,
+      lastname,
+      birthday,
+      salary,
+      position,
+      id
+    });
+    res.status(200).json(person);
+  } catch (error) {
+    console.log(error);
+    const message = validateError(error);
+    res.status(400).json({ message });
+  }
+};
+
 const personalRouter = Router();
 
 personalRouter.get(`/`, [], getAll);
 personalRouter.get(`/:id`, [], getById);
 personalRouter.post(`/`, [], insert);
+personalRouter.put(`/`, [], update);
+
 
 module.exports = {
   personalRouter,

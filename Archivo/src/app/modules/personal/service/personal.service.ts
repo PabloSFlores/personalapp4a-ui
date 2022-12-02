@@ -9,6 +9,17 @@ import { Personal } from '../types/personal';
 export class PersonalService {
   public loading: boolean = false;
   private people: Personal[] = [];
+  edit: boolean = false;
+  person: Personal = {
+    id: 0,
+    name: "",
+    surname: "",
+    lastname: "",
+    birthday: "",
+    salary: 0.0,
+    position: {},
+    user: undefined
+  };
 
   get personal(){
     return [...this.people];
@@ -26,5 +37,15 @@ export class PersonalService {
     this.loading = true;
     return this.http
     .post<Personal>(`${APP_URL}api/personal/`,personal)
+  }
+
+  update(personal: Personal){
+    this.loading = true;
+    return this.http
+    .put<Personal>(`${APP_URL}api/personal/`,personal)
+  }
+
+  changeStatus(person: Personal){
+    
   }
 }

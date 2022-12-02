@@ -7,14 +7,7 @@
         <!-- Nombre -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Name</mat-label>
-          <input
-            matInput
-            placeholder="Mike"
-            #name="ngModel"
-            name="name"
-            [(ngModel)]="personal.name"
-            required
-          />
+          <input matInput placeholder="Mike" #name="ngModel" name="name" [(ngModel)]="personal.name" required />
           <mat-error *ngIf="name.invalid">
             <span *ngIf="name.errors?.['required']"> Campo obligatorio </span>
           </mat-error>
@@ -24,14 +17,8 @@
         <!-- Surname -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Surname</mat-label>
-          <input
-            matInput
-            placeholder="Flores"
-            #surname="ngModel"
-            name="surname"
-            [(ngModel)]="personal.surname"
-            required
-          />
+          <input matInput placeholder="Flores" #surname="ngModel" name="surname" [(ngModel)]="personal.surname"
+            required />
           <mat-error *ngIf="surname.invalid">
             <span *ngIf="surname.errors?.['required']"> Campo obligatorio </span>
           </mat-error>
@@ -44,28 +31,15 @@
         <!-- Lastname -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Lastname</mat-label>
-          <input
-            matInput
-            placeholder="Santana"
-            #lastname="ngModel"
-            name="lastname"
-            [(ngModel)]="personal.lastname"
-          />
+          <input matInput placeholder="Santana" #lastname="ngModel" name="lastname" [(ngModel)]="personal.lastname" />
         </mat-form-field>
       </div>
       <div class="col">
         <!-- Birthday -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Birthday</mat-label>
-          <input
-            type="date"
-            matInput
-            placeholder="2000-01-01"
-            #birthday="ngModel"
-            name="birthday"
-            [(ngModel)]="personal.birthday"
-            required
-          />
+          <input type="date" matInput placeholder="2000-01-01" #birthday="ngModel" name="birthday"
+            [(ngModel)]="personal.birthday" required />
           <mat-error *ngIf="birthday.invalid">
             <span *ngIf="birthday.errors?.['required']"> Campo obligatorio </span>
           </mat-error>
@@ -78,15 +52,8 @@
         <!-- Salary -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Salary</mat-label>
-          <input
-            matInput
-            placeholder="2000.5"
-            #salary="ngModel"
-            name="salary"
-            [(ngModel)]="personal.salary"
-            required
-            min="1"
-          />
+          <input type="number" matInput placeholder="2000.5" #salary="ngModel" name="salary"
+            [(ngModel)]="personal.salary" required min="1" />
           <mat-error *ngIf="salary.invalid">
             <span *ngIf="salary.errors?.['required']"> Campo obligatorio </span>
             <span *ngIf="salary.errors?.['min']"> Mínimo ingrese "1" </span>
@@ -97,15 +64,10 @@
         <!-- Posición -->
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Position</mat-label>
-          <mat-select
-            [required]="true"
-            [(ngModel)]="personal.position!.id"
-            #position="ngModel"
-            name="position"
-          >
+          <mat-select [required]="true" [(ngModel)]="personal.position!.id" #position="ngModel" name="position">
             <mat-option [value]="">Seleccionar posicion</mat-option>
-            <mat-option *ngFor="let position of positions" [value]="position.id"
-              >{{ position.position }}-{{ position.description }}</mat-option>
+            <mat-option *ngFor="let position of positions" [value]="position.id">{{ position.position }}-{{
+              position.description }}</mat-option>
           </mat-select>
           <mat-error *ngIf="position.invalid">
             <span *ngIf="position.errors?.['required']">Campo obligatorio</span>
@@ -115,10 +77,9 @@
     </div>
 
     <div class="row">
-        <mat-label>Seleccione un archivo</mat-label>
-        <input type="file" class="form-control w-100" accept="application/pdf,image/*"
-        (change)="previewFile($event)"/>
-        <img [src]="loadedFile">
+      <mat-label>Seleccione un archivo</mat-label>
+      <input type="file" class="form-control w-100" accept="application/pdf,image/*" (change)="previewFile($event)" />
+      <img [src]="loadedFile">
     </div>
 
   </mat-dialog-content>
@@ -127,11 +88,7 @@
       <mat-icon>close</mat-icon>
       Cancel
     </button>
-    <button
-      mat-button
-      type="submit"
-      cdkFocusInitial
-      [disabled]="personalForm.invalid">
+    <button mat-button type="submit" cdkFocusInitial [disabled]="personalForm.invalid">
       <mat-icon>check</mat-icon>
       Save
     </button>

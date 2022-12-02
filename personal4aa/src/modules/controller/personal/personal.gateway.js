@@ -37,8 +37,34 @@ const save = async (person) => {
   return { ...person, id: insertedId };
 };
 
+const modify = async (person) => {
+  console.log(person);
+  if (
+    !person.name ||
+    !person.surname ||
+    !person.birthday ||
+    !person.salary ||
+    !person.position.id ||
+    !person.id
+  )
+    throw Error('Missing fields');
+  const sql = `UPDATE personal SET name = ?, surname = ?, lastname = ?, birthday = ?,
+        salary = ?, position_id = ? WHERE id = ?;`;
+  const { insertedId } = await query(sql, [
+    person.name,
+    person.surname,
+    person.lastname || null,
+    person.birthday,
+    person.salary,
+    person.position.id,
+    person.id,
+  ]);
+  return { ...person, id: insertedId };
+};
+
 module.exports = {
   findAll,
   findById,
   save,
+  modify,
 };

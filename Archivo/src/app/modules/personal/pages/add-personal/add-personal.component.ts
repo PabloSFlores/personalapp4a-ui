@@ -11,23 +11,16 @@ import { Position } from '../../types/position';
   templateUrl: './add-personal.component.html'
 })
 export class AddPersonalComponent implements OnInit {
-  personal: Personal = {
-    id: 0,
-    name: "",
-    surname: "",
-    lastname: "",
-    birthday: "",
-    salary: 0.0,
-    position: {},
-    user: undefined
-  }
+  personal: Personal;
 
   positions: Position[] = [];
   loadedFile = "";
 
   constructor(private positionsService: PositionsService,
     private personalService: PersonalService,
-    public modalRef: DialogRef<AddPersonalComponent>) { }
+    public modalRef: DialogRef<AddPersonalComponent>) {
+      this.personal = this.personalService.person;
+     }
 
   ngOnInit(): void {
     //Back-End -> Servicio que obtenga las positions
@@ -40,23 +33,28 @@ export class AddPersonalComponent implements OnInit {
       })
   }
 
+  //Para bloquear campos si se esta editando un usuario.
+  //[disabled]="edit"
+  get edit(){
+    return this.personalService.edit;
+  }
+
   savePerson() {
-    this.personalService.save(this.personal).
-      subscribe((response: Personal) => {
-        //validar si la persona fue registrada correctamente
-        //SI -> Cerrar Modal, limpiar el form y actualizar la consulta general del personal
-        this.personal = {
-          id: 0,
-          name: "",
-          surname: "",
-          lastname: "",
-          birthday: "",
-          salary: 0.0,
-          position: {},
-          user: undefined
-        };
+    if(this.edit){
+      //PUT
+      this.personalService.update(this.personal)
+      .subscribe((response)=>{
         this.modalRef.close();
       })
+    }else{
+      //validar si la persona fue registrada correctamente
+      //SI -> Cerrar Modal, limpiar el form y actualizar la consulta general del personal
+      //POST      
+      this.personalService.save(this.personal).
+      subscribe((response: Personal) => {
+        this.modalRef.close();
+      })
+    }
   }
 
   previewFile(event: any){

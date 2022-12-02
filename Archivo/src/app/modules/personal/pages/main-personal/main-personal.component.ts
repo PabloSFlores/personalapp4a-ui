@@ -18,11 +18,16 @@ export class MainPersonalComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   personal!: MatTableDataSource<Personal>;
+
   // dataSource = ELEMENT_DATA;
   constructor(private personalService: PersonalService, private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllPersonal();
+  }
+
+  get isLoading() {
+    return this.personalService.loading;
   }
 
   getAllPersonal() {
@@ -52,6 +57,31 @@ export class MainPersonalComponent implements OnInit {
     });
     modalRef.afterClosed().subscribe((result: any) => {
       this.getAllPersonal();
+      this.personalService.person = {
+        id: 0,
+        name: "",
+        surname: "",
+        lastname: "",
+        birthday: "",
+        salary: 0.0,
+        position: {},
+        user: undefined
+      };
     })
+  }
+
+  editPerson(person: any) {
+    console.log(person);
+    this.personalService.person = { 
+      ...person, 
+      birthday: person.birthday.split('T')[0], 
+      position: { id: person.position_id } 
+    };
+    this.personalService.edit = true;
+    this.openDialog('2m', '2ms');
+  }
+
+  removePerson(){
+    
   }
 }

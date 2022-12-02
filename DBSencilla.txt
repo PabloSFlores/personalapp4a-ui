@@ -37,3 +37,6 @@ unique (email),
 constraint fk_personal_users
 foreign key (personal_id) references personal (id)
 );
+
+
+alter TABLE personal add COLUMN status tinyint default 1;
