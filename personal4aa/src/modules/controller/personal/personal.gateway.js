@@ -62,9 +62,24 @@ const modify = async (person) => {
   return { ...person, id: insertedId };
 };
 
+const changeStatus = async (person) => {
+  console.log(person);
+  if (
+    !person.id
+  )
+    throw Error('Missing fields');
+  const sql = `UPDATE personal SET status = ? WHERE id = ?;`;
+  const { insertedId } = await query(sql, [
+    person.status == 1?0:1,
+    person.id,
+  ]);
+  return { ...person, id: insertedId };
+};
+
 module.exports = {
   findAll,
   findById,
   save,
   modify,
+  changeStatus,
 };
