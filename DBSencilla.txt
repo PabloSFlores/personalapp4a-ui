@@ -17,6 +17,8 @@ surname varchar(40) not null,
 lastname varchar(40) null,
 salary double not null,
 birthday date not null,
+status tinyint not null,
+avatar mediumtext null,
 position_id bigint not null,
 constraint fk_personal_position
 foreign key (position_id) references position (id)
@@ -29,7 +31,6 @@ primary key,
 email varchar(50) not null,
 password varchar(100) not null,
 role varchar(10) not null,
-status tinyint not null,
 created_at datetime default CURRENT_TIMESTAMP not null,
 personal_id bigint not null,
 constraint email

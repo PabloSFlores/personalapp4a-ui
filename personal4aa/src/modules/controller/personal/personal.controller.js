@@ -27,7 +27,7 @@ const getById = async (req, res = Response) => {
 
 const insert = async (req, res = Response) => {
   try {
-    const { name, surname, lastname, birthday, salary, position } = req.body;
+    const { name, surname, lastname, birthday, salary, position, avatar } = req.body;
     const person = await save({
       name,
       surname,
@@ -35,6 +35,7 @@ const insert = async (req, res = Response) => {
       birthday,
       salary,
       position,
+      avatar
     });
     res.status(200).json(person);
   } catch (error) {

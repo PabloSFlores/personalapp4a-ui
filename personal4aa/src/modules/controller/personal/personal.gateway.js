@@ -25,7 +25,7 @@ const save = async (person) => {
   )
     throw Error('Missing fields');
   const sql = `INSERT INTO personal (name,surname,lastname,birthday,
-        salary, position_id) VALUES (?,?,?,?,?,?)`;
+        salary, position_id, avatar) VALUES (?,?,?,?,?,?,?)`;
   const { insertedId } = await query(sql, [
     person.name,
     person.surname,
@@ -33,6 +33,7 @@ const save = async (person) => {
     person.birthday,
     person.salary,
     person.position.id,
+    person.avatar,
   ]);
   return { ...person, id: insertedId };
 };

@@ -40,7 +40,8 @@ export class AddPersonalComponent implements OnInit {
 
   savePersonal() {
     console.log(this.personal);
-    if (this.personalService.edit) {
+    this.personal.avatar = this.loadedFile;
+    if (this.personalService.edit && this.personal.id!=0) {
       this.personalService.update(this.personal)
         .subscribe((response) => {
           this.modalRef.close();

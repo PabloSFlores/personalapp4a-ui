@@ -14,7 +14,7 @@ import { AddPersonalComponent } from '../add-personal/add-personal.component';
 })
 
 export class MainPersonalComponent implements OnInit {
-  displayedColumns: string[] = ['#', 'name', 'surname', 'lastname', 'birthday', 'salary', 'actions'];
+  displayedColumns: string[] = ['#','avatar', 'name', 'surname', 'lastname', 'birthday', 'salary', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   personal!: MatTableDataSource<Personal>;
