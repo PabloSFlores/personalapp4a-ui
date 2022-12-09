@@ -31,6 +31,7 @@ primary key,
 email varchar(50) not null,
 password varchar(100) not null,
 role varchar(10) not null,
+status tinyint not null,
 created_at datetime default CURRENT_TIMESTAMP not null,
 personal_id bigint not null,
 constraint email

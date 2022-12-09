@@ -1,14 +1,14 @@
 const { Response, Router } = require('express');
 const { validateError } = require('../../../utils/functions');
 const { save } = require('./user.gateway');
-const transporter = require('../../../utils/email-service');
+const {transporter, template} = require('../../../utils/email-service');
 
 const saveAndFlush = async (req, res = Response) => {
     try {
         const { email, password, role, personal } = req.body;
         const user = await save({ email, password, role, personal });
         const info = await transporter.sendMail({
-            from: `Mike Moreno <${process.env.EMAIL_USER}>`,
+            from: `Pablo Samuel <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'Successful Registration',
             html: template('Nombre completo', 'Comentarios y creo que todos uya están en extra', email)
